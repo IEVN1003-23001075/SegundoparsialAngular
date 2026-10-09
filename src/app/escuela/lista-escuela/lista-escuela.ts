@@ -1,43 +1,52 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
-  Validators
+  ReactiveFormsModule
 } from '@angular/forms';
+
+import { IAlumno } from '../alumno';
 
 @Component({
   selector: 'app-lista-escuela',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './lista-escuela.html',
-  styleUrl: './lista-escuela.css',
 })
-export class ListaEscuela {
+export class ListaEscuela implements OnInit {
 
-  contactForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3)
-    ]),
+  formulario!: FormGroup;
 
-    checkAdult: new FormControl(false, [
-      Validators.requiredTrue
-    ]),
+  mostrarAlumno: boolean = false;
 
-    department: new FormControl(''),
+  nuevoAlumno: IAlumno = {
+    matricula: '',
+    nombre: '',
+    correo: '',
+    materia: ''
+  };
 
-    comment: new FormControl('', [
-      Validators.required
-    ])
-  });
+  ngOnInit(): void {
+    this.formulario = new FormGroup({
+      matricula: new FormControl(''),
+      nombre: new FormControl(''),
+      correo: new FormControl(''),
+      materia: new FormControl('')
+    });
+  }
 
-  enviar(): void {
-    this.contactForm.markAllAsTouched();
+  muestraAlumno(): void {
+    this.formulario.markAllAsTouched();
 
-    if (this.contactForm.valid) {
-      console.log('Datos del formulario:', this.contactForm.value);
+    if (this.formulario.invalid) {
+      return;
     }
+
+    this.nuevoAlumno.matricula = this.formulario.value.matricula;
+    this.nuevoAlumno.nombre = this.formulario.value.nombre;
+    this.nuevoAlumno.correo = this.formulario.value.correo;
+    this.nuevoAlumno.materia = this.formulario.value.materia;
+
+    this.mostrarAlumno = true;
   }
 }

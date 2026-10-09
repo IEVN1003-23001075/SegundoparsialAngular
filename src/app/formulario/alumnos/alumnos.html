@@ -1,0 +1,184 @@
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow">
+
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">
+    Formulario de contacto
+  </h1>
+
+  <form [formGroup]="contactForm" (ngSubmit)="enviar()">
+
+    <!-- Nombre -->
+    <div class="mb-5">
+
+      <label
+        for="name"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Nombre
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        name="name"
+        formControlName="name"
+        required
+        placeholder="Escribe tu nombre"
+        class="bg-gray-50 border border-gray-300 text-gray-900
+               text-sm rounded-lg focus:ring-blue-500
+               focus:border-blue-500 block w-full p-2.5"
+      >
+
+      <div
+        *ngIf="
+          contactForm.get('name')?.touched &&
+          contactForm.get('name')?.errors?.['required']
+        "
+        class="p-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50"
+        role="alert"
+      >
+        El nombre es obligatorio.
+      </div>
+
+      <div
+        *ngIf="
+          contactForm.get('name')?.touched &&
+          contactForm.get('name')?.errors?.['minlength']
+        "
+        class="p-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50"
+        role="alert"
+      >
+        El nombre debe tener al menos
+        {{
+          contactForm.get('name')?.errors?.['minlength']?.requiredLength
+        }}
+        caracteres.
+      </div>
+
+    </div>
+
+    <!-- Mayor de edad -->
+    <div class="mb-5">
+
+      <div class="flex items-center">
+
+        <input
+          type="checkbox"
+          id="checkAdult"
+          name="checkAdult"
+          formControlName="checkAdult"
+          required
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300
+                 rounded focus:ring-blue-500 focus:ring-2"
+        >
+
+        <label
+          for="checkAdult"
+          class="ms-2 text-sm font-medium text-gray-900"
+        >
+          Tengo 18 años o más.
+        </label>
+
+      </div>
+
+      <div
+        *ngIf="
+          contactForm.get('checkAdult')?.touched &&
+          contactForm.get('checkAdult')?.errors?.['required']
+        "
+        class="p-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50"
+        role="alert"
+      >
+        Debes confirmar que tienes 18 años o más.
+      </div>
+
+    </div>
+
+    <!-- Departamento -->
+    <div class="mb-5">
+
+      <label
+        for="department"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Departamento
+      </label>
+
+      <select
+        id="department"
+        name="department"
+        formControlName="department"
+        class="bg-gray-50 border border-gray-300 text-gray-900
+               text-sm rounded-lg focus:ring-blue-500
+               focus:border-blue-500 block w-full p-2.5"
+      >
+        <option value="" disabled>
+          Selecciona un departamento
+        </option>
+
+        <option value="marketing">
+          Mercadotecnia
+        </option>
+
+        <option value="sales">
+          Ventas
+        </option>
+
+        <option value="other">
+          Otro
+        </option>
+      </select>
+
+    </div>
+
+    <!-- Comentario -->
+    <div class="mb-5">
+
+      <label
+        for="comment"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Comentario
+      </label>
+
+      <textarea
+        id="comment"
+        name="comment"
+        rows="4"
+        formControlName="comment"
+        required
+        placeholder="Escribe tu comentario..."
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50
+               rounded-lg border border-gray-300
+               focus:ring-blue-500 focus:border-blue-500"
+      ></textarea>
+
+      <div
+        *ngIf="
+          contactForm.get('comment')?.touched &&
+          contactForm.get('comment')?.errors?.['required']
+        "
+        class="p-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50"
+        role="alert"
+      >
+        El comentario es obligatorio.
+      </div>
+
+    </div>
+
+    <!-- Botón -->
+    <div class="flex justify-end mt-5">
+
+      <button
+        type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800
+               focus:ring-4 focus:outline-none focus:ring-blue-300
+               font-medium rounded-lg text-sm px-5 py-2.5"
+      >
+        Enviar
+      </button>
+
+    </div>
+
+  </form>
+
+</div>
