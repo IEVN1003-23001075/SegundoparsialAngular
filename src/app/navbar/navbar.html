@@ -1,37 +1,85 @@
-<nav class="bg-gray-900 p-4">
-  <div class="max-w-4xl mx-auto flex flex-wrap items-center gap-6">
+<nav class="bg-white w-full border-b border-gray-200">
 
-    <span class="text-white text-xl font-bold">
-      Segundo parcial
-    </span>
+  <div
+    class="max-w-screen-xl flex flex-wrap items-center
+           justify-between gap-4 mx-auto p-4"
+  >
 
+    <!-- Logo -->
     <a
-      routerLink="/formulario/zodiaco"
-      class="text-white hover:text-blue-400"
+      routerLink="/"
+      class="flex items-center gap-3"
     >
-      Zodiaco
+      <img
+        src="https://flowbite.com/docs/images/logo.svg"
+        class="h-7"
+        alt="Logo de Flowbite"
+      >
+
+      <span class="text-xl text-gray-900 font-semibold">
+        Flowbite
+      </span>
     </a>
 
-    <a
-      routerLink="/formulario/alumnos"
-      class="text-white hover:text-blue-400"
-    >
-      Alumnos
-    </a>
+    <!-- Navegación -->
+    <ul class="flex flex-wrap items-center gap-6 font-medium">
 
-    <a
-      routerLink="/formulario/escuela"
-      class="text-white hover:text-blue-400"
-    >
-      Escuela
-    </a>
+      <li>
+        <a
+          routerLink="/"
+          class="block text-blue-700"
+        >
+          Home
+        </a>
+      </li>
 
-    <a
-      routerLink="/escuela/cinepolis"
-      class="text-white hover:text-blue-400"
-    >
-      Cinépolis
-    </a>
+      <li>
+        <a
+          routerLink="/formulario/zodiaco"
+          class="block text-gray-900 hover:text-blue-700"
+        >
+          Zodiaco
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/escuela/cinepolis"
+          class="block text-gray-900 hover:text-blue-700"
+        >
+          Cinépolis
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/formulario/distancia"
+          class="block text-gray-900 hover:text-blue-700"
+        >
+          Sign-In
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/escuela/listaescuela"
+          class="block text-gray-900 hover:text-blue-700"
+        >
+          Alumnos
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="#"
+          class="block text-gray-900 hover:text-blue-700"
+        >
+          Contact
+        </a>
+      </li>
+
+    </ul>
 
   </div>
+
 </nav>

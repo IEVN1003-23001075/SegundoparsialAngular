@@ -2,31 +2,56 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'formulario',
-    children: [
-      {
-        path: 'zodiaco',
-        loadComponent: () =>
-          import('./formulario/zodiaco/zodiaco').then(
-            (c) => c.Zodiaco
-          ),
-      },
-      {
-        path: 'escuela',
-        loadComponent: () =>
-          import('./escuela/lista-escuela/lista-escuela').then(
-            (c) => c.ListaEscuela
-          ),
-      },
-    ],
+    path: 'formulario/zodiaco',
+    loadComponent: () =>
+      import('./formulario/zodiaco/zodiaco').then(
+        (c) => c.Zodiaco
+      ),
   },
   {
-    path: '',
-    redirectTo: 'formulario/escuela',
+    path: 'formulario/distancia',
+    loadComponent: () =>
+      import('./formulario/alumnos/alumnos').then(
+        (c) => c.Alumnos
+      ),
+  },
+  {
+    path: 'escuela/cinepolis',
+    loadComponent: () =>
+      import('./escuela/cinepolis/cinepolis').then(
+        (c) => c.Cinepolis
+      ),
+  },
+  {
+    path: 'escuela/listaescuela',
+    loadComponent: () =>
+      import('./escuela/lista-escuela/lista-escuela').then(
+        (c) => c.ListaEscuela
+      ),
+  },
+
+  // Direcciones anteriores.
+  {
+    path: 'formulario/alumnos',
+    redirectTo: 'formulario/distancia',
     pathMatch: 'full',
   },
   {
+    path: 'formulario/escuela',
+    redirectTo: 'escuela/listaescuela',
+    pathMatch: 'full',
+  },
+
+  // Página principal.
+  {
+    path: '',
+    redirectTo: 'escuela/listaescuela',
+    pathMatch: 'full',
+  },
+
+  // Direcciones no existentes.
+  {
     path: '**',
-    redirectTo: 'formulario/escuela',
+    redirectTo: 'escuela/listaescuela',
   },
 ];
