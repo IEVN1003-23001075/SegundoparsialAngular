@@ -1,17 +1,18 @@
-import { Component, signal, OnInit } from '@angular/core'; 
+import { Component, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { initFlowbite } from 'flowbite'; 
+import { initFlowbite } from 'flowbite';
+import { Navbar } from './navbar/navbar';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
 })
-export class App implements OnInit { 
+export class App implements OnInit {
   protected readonly title = signal('segundoparcialangular');
 
   ngOnInit(): void {
-    initFlowbite(); 
+    initFlowbite();
   }
 }

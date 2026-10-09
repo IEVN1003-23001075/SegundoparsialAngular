@@ -1,0 +1,104 @@
+<h2>Zodiaco chino</h2>
+
+<div>
+  <label for="nombre">Nombre:</label>
+  <input
+    id="nombre"
+    type="text"
+    [value]="nombre"
+    (input)="nombre = $any($event.target).value">
+</div>
+
+<div>
+  <label for="apaterno">Apellido paterno:</label>
+  <input
+    id="apaterno"
+    type="text"
+    [value]="apaterno"
+    (input)="apaterno = $any($event.target).value">
+</div>
+
+<div>
+  <label for="amaterno">Apellido materno:</label>
+  <input
+    id="amaterno"
+    type="text"
+    [value]="amaterno"
+    (input)="amaterno = $any($event.target).value">
+</div>
+
+<h3>Fecha de nacimiento</h3>
+
+<div>
+  <label for="dia">Día:</label>
+  <input
+    id="dia"
+    type="number"
+    min="1"
+    max="31"
+    [value]="dia"
+    (input)="dia = $any($event.target).valueAsNumber">
+</div>
+
+<div>
+  <label for="mes">Mes:</label>
+  <input
+    id="mes"
+    type="number"
+    min="1"
+    max="12"
+    [value]="mes"
+    (input)="mes = $any($event.target).valueAsNumber">
+</div>
+
+<div>
+  <label for="anio">Año:</label>
+  <input
+    id="anio"
+    type="number"
+    min="1"
+    max="2026"
+    [value]="anio"
+    (input)="anio = $any($event.target).valueAsNumber">
+</div>
+
+<h3>Sexo</h3>
+
+<label class="opcion">
+  <input
+    type="radio"
+    name="sexo"
+    value="Masculino"
+    [checked]="sexo === 'Masculino'"
+    (change)="sexo = 'Masculino'">
+  Masculino
+</label>
+
+<label class="opcion">
+  <input
+    type="radio"
+    name="sexo"
+    value="Femenino"
+    [checked]="sexo === 'Femenino'"
+    (change)="sexo = 'Femenino'">
+  Femenino
+</label>
+
+<button type="button" (click)="imprimir()">
+  Mostrar resultado
+</button>
+
+@if (mostrarResultado) {
+  <section class="resultado">
+    <h3>Resultado</h3>
+
+    <p><strong>Nombre completo:</strong> {{ nombreCompleto }}</p>
+    <p><strong>Edad:</strong> {{ edad }} años</p>
+    <p><strong>Sexo:</strong> {{ sexo }}</p>
+    <p><strong>Signo zodiacal chino:</strong> {{ signoZodiacal }}</p>
+
+    <a [href]="imagenSigno" target="_blank" rel="noopener noreferrer">
+      Ver imagen de {{ signoZodiacal }}
+    </a>
+  </section>
+}
