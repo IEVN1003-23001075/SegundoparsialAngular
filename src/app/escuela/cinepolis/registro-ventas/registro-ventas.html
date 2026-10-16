@@ -1,0 +1,218 @@
+
+<div class="max-w-6xl mx-auto mt-8 mb-8 text-black font-sans px-4">
+
+  <h1 class="mb-6 text-3xl font-bold">
+    Lista de ventas de Cinépolis
+  </h1>
+
+  <!-- Mensajes -->
+  @if (mensaje !== '') {
+    <div
+      class="p-4 mb-4 rounded-lg border border-gray-300 bg-gray-100"
+      role="alert"
+    >
+      {{ mensaje }}
+    </div>
+  }
+
+  <!-- Formulario para editar una venta -->
+  @if (mostrarFormulario) {
+    <div class="mb-8 p-6 border border-gray-300 rounded-xl shadow-md bg-white">
+
+      <h2 class="text-2xl font-bold mb-5">
+        Editar venta
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- Nombre -->
+        <div>
+          <label for="nombreEdicion" class="block mb-2">
+            Nombre del comprador
+          </label>
+
+          <input
+            type="text"
+            id="nombreEdicion"
+            name="nombreEdicion"
+            [(ngModel)]="nombre"
+            class="w-full border border-gray-300 rounded-lg p-3"
+          >
+        </div>
+
+        <!-- Compradores -->
+        <div>
+          <label for="compradoresEdicion" class="block mb-2">
+            Cantidad de compradores
+          </label>
+
+          <input
+            type="number"
+            id="compradoresEdicion"
+            name="compradoresEdicion"
+            min="1"
+            step="1"
+            [(ngModel)]="compradores"
+            class="w-full border border-gray-300 rounded-lg p-3"
+          >
+        </div>
+
+        <!-- Boletos -->
+        <div>
+          <label for="boletosEdicion" class="block mb-2">
+            Cantidad de boletos
+          </label>
+
+          <input
+            type="number"
+            id="boletosEdicion"
+            name="boletosEdicion"
+            min="1"
+            step="1"
+            [(ngModel)]="boletos"
+            class="w-full border border-gray-300 rounded-lg p-3"
+          >
+        </div>
+
+        <!-- Tarjeta Cineco -->
+        <div>
+          <label for="tarjetaEdicion" class="block mb-2">
+            ¿Cuenta con tarjeta Cineco?
+          </label>
+
+          <select
+            id="tarjetaEdicion"
+            name="tarjetaEdicion"
+            [(ngModel)]="tarjeta"
+            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          >
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+      </div>
+
+      <p class="mt-5 text-lg">
+        Total anterior: ${{ total.toFixed(2) }}
+      </p>
+
+      <p class="mt-2 text-sm text-gray-600">
+        Al actualizar, se calculará nuevamente el total
+        de acuerdo con los boletos y la tarjeta Cineco.
+      </p>
+
+      <div class="flex flex-wrap gap-3 mt-6">
+
+        <button
+          type="button"
+          (click)="actualizarVenta()"
+          class="px-5 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-100"
+        >
+          Actualizar venta
+        </button>
+
+        <button
+          type="button"
+          (click)="cancelarEdicion()"
+          class="px-5 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-100"
+        >
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+  }
+
+  <!-- Tabla de ventas -->
+  <div class="overflow-x-auto shadow-md rounded-lg">
+
+    <table class="w-full text-sm text-left">
+
+      <thead class="text-xs uppercase bg-gray-100">
+        <tr>
+          <th class="px-6 py-3">Nombre</th>
+          <th class="px-6 py-3">Compradores</th>
+          <th class="px-6 py-3">Boletos</th>
+          <th class="px-6 py-3">Tarjeta Cineco</th>
+          <th class="px-6 py-3">Total</th>
+          <th class="px-6 py-3">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (venta1 of ventas; track $index; let i = $index) {
+          <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+
+            <td class="px-6 py-4 font-medium whitespace-nowrap">
+              {{ venta1.nombre }}
+            </td>
+
+            <td class="px-6 py-4">
+              {{ venta1.compradores }}
+            </td>
+
+            <td class="px-6 py-4">
+              {{ venta1.boletos }}
+            </td>
+
+            <td class="px-6 py-4">
+              {{ venta1.tarjeta === 'si' ? 'Sí' : 'No' }}
+            </td>
+
+            <td class="px-6 py-4 whitespace-nowrap">
+              ${{ venta1.total.toFixed(2) }}
+            </td>
+
+            <td class="px-6 py-4">
+              <div class="flex flex-wrap gap-2">
+
+                <button
+                  type="button"
+                  (click)="editarVenta(i)"
+                  class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200"
+                >
+                  Editar
+                </button>
+
+                <button
+                  type="button"
+                  (click)="eliminarVenta(i)"
+                  class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200"
+                >
+                  Eliminar
+                </button>
+
+              </div>
+            </td>
+
+          </tr>
+        }
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- Cuando no hay ventas -->
+  @if (ventas.length === 0) {
+    <div
+      class="p-4 mt-4 rounded-lg bg-gray-100"
+      role="alert"
+    >
+      <strong>Información:</strong>
+      No hay ventas registradas.
+    </div>
+  }
+
+  <!-- Regresar -->
+  <button
+    type="button"
+    (click)="regresar()"
+    class="mt-6 px-5 py-3 border border-gray-300 rounded-lg hover:bg-gray-100"
+  >
+    Regresar a Cinépolis
+  </button>
+
+</div>

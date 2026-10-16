@@ -1,3 +1,4 @@
+
 <div class="max-w-4xl mx-auto bg-white text-black rounded-xl shadow-lg p-6 md:p-8 font-sans">
 
   <h1 class="text-4xl text-center mb-8">
@@ -8,9 +9,7 @@
 
     <!-- Entradas -->
     <div>
-      <h2 class="text-2xl mb-3">
-        Entradas
-      </h2>
+      <h2 class="text-2xl mb-3">Entradas</h2>
 
       <div class="border border-gray-300 rounded-lg p-5">
 
@@ -44,48 +43,34 @@
           >
         </div>
 
-        <!-- Tarjeta Cineco -->
         <div class="mb-4">
-          <p class="mb-2">
-            Tarjeta Cineco
-          </p>
+          <p class="mb-2">Tarjeta Cineco</p>
 
           <div class="flex gap-6">
-
-            <label
-              for="tarjetaSi"
-              class="flex items-center gap-2 cursor-pointer"
-            >
+            <label class="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
-                id="tarjetaSi"
                 name="tarjeta"
                 value="si"
                 [(ngModel)]="tarjeta"
-                style="appearance: auto; width: 18px; height: 18px; accent-color: black;"
               >
               Sí
             </label>
 
-            <label
-              for="tarjetaNo"
-              class="flex items-center gap-2 cursor-pointer"
-            >
+            <label class="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
-                id="tarjetaNo"
                 name="tarjeta"
                 value="no"
                 [(ngModel)]="tarjeta"
-                style="appearance: auto; width: 18px; height: 18px; accent-color: black;"
               >
               No
             </label>
-
           </div>
 
           <p class="mt-3">
-            Opción seleccionada: {{ tarjeta }}
+            Opción seleccionada:
+            {{ tarjeta === 'si' ? 'Sí' : 'No' }}
           </p>
         </div>
 
@@ -110,9 +95,7 @@
 
     <!-- Salidas -->
     <div>
-      <h2 class="text-2xl mb-3">
-        Salidas
-      </h2>
+      <h2 class="text-2xl mb-3">Salidas</h2>
 
       <div class="border border-gray-300 rounded-lg p-5">
 
@@ -148,32 +131,33 @@
 
   </div>
 
-  <!-- Nombre del cine -->
+  <!-- Identidad del cine -->
   <div class="text-center my-10">
-    <p class="text-5xl md:text-6xl">
-      Cinépolis
-    </p>
-
-    <p class="mt-3">
-      LA CAPITAL DEL CINE
-    </p>
+    <p class="text-5xl md:text-6xl">Cinépolis</p>
+    <p class="mt-3">LA CAPITAL DEL CINE</p>
   </div>
 
   <!-- Acciones -->
-  <div class="max-w-sm mx-auto">
-    <h2 class="text-2xl mb-3">
-      Acciones
-    </h2>
+  <div class="max-w-lg mx-auto">
+    <h2 class="text-2xl mb-3">Acciones</h2>
 
     <div class="border border-gray-300 rounded-lg p-5">
-      <div class="flex justify-center gap-4">
+      <div class="flex flex-wrap justify-center gap-4">
 
         <button
           type="button"
           (click)="procesar()"
           class="bg-white text-black border border-gray-300 rounded-lg px-5 py-2 hover:bg-gray-100"
         >
-          Procesar
+          {{ indiceEditar === -1 ? 'Procesar' : 'Guardar cambios' }}
+        </button>
+
+        <button
+          type="button"
+          (click)="verVentas()"
+          class="bg-white text-black border border-gray-300 rounded-lg px-5 py-2 hover:bg-gray-100"
+        >
+          Ver ventas
         </button>
 
         <button
