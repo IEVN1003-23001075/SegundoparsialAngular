@@ -1,0 +1,159 @@
+
+<div class="min-h-screen bg-slate-950 text-white p-6">
+
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Encabezado -->
+    <div class="mb-8">
+      <a
+        routerLink="/utl/maestros"
+        class="text-blue-400 hover:text-blue-300 transition">
+        ← Volver a maestros
+      </a>
+
+      <h1 class="text-3xl font-bold mt-4">
+        Editar maestro
+      </h1>
+
+      <p class="text-slate-400 mt-2">
+        Modifica la información del maestro seleccionado.
+      </p>
+    </div>
+
+    <!-- Cargando -->
+    <div *ngIf="cargando"
+      class="bg-slate-900 border border-slate-800 rounded-xl p-8 text-center">
+      <p class="text-slate-300">Cargando información del maestro...</p>
+    </div>
+
+    <!-- Formulario -->
+    <div *ngIf="!cargando && !error"
+      class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+      <div class="mb-6">
+        <span class="text-sm text-slate-400">ID del maestro</span>
+        <p class="text-xl font-bold text-blue-400">
+          {{ idmaestro }}
+        </p>
+      </div>
+
+      <form #formulario="ngForm"
+        (ngSubmit)="actualizarMaestro(formulario)">
+
+        <!-- Nombre -->
+        <div class="mb-5">
+          <label class="block text-sm font-medium text-slate-300 mb-2">
+            Nombre
+          </label>
+
+          <input
+            type="text"
+            name="nombre"
+            [(ngModel)]="maestro.nombre"
+            required
+            maxlength="50"
+            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Apellido paterno -->
+        <div class="mb-5">
+          <label class="block text-sm font-medium text-slate-300 mb-2">
+            Apellido paterno
+          </label>
+
+          <input
+            type="text"
+            name="apaterno"
+            [(ngModel)]="maestro.apaterno"
+            required
+            maxlength="50"
+            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Apellido materno -->
+        <div class="mb-5">
+          <label class="block text-sm font-medium text-slate-300 mb-2">
+            Apellido materno
+          </label>
+
+          <input
+            type="text"
+            name="amaterno"
+            [(ngModel)]="maestro.amaterno"
+            required
+            maxlength="50"
+            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Correo -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-slate-300 mb-2">
+            Correo electrónico
+          </label>
+
+          <input
+            type="email"
+            name="correo"
+            [(ngModel)]="maestro.correo"
+            required
+            maxlength="50"
+            email
+            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Mensajes -->
+        <div *ngIf="error"
+          class="bg-red-950/40 border border-red-800 text-red-300 rounded-lg p-3 mb-5">
+          {{ error }}
+        </div>
+
+        <div *ngIf="mensaje"
+          class="bg-green-950/40 border border-green-800 text-green-300 rounded-lg p-3 mb-5">
+          {{ mensaje }}
+        </div>
+
+        <!-- Botones -->
+        <div class="flex flex-col sm:flex-row justify-end gap-3">
+
+          <a
+            routerLink="/utl/maestros"
+            class="text-center bg-slate-700 hover:bg-slate-600 text-white px-5 py-3 rounded-lg transition">
+            Cancelar
+          </a>
+
+          <button
+            type="submit"
+            [disabled]="guardando || formulario.invalid"
+            class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:text-slate-400 text-white font-semibold px-5 py-3 rounded-lg transition">
+            {{ guardando ? 'Actualizando...' : 'Guardar cambios' }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- Error de carga -->
+    <div *ngIf="!cargando && error"
+      class="bg-red-950/40 border border-red-800 rounded-xl p-5">
+
+      <p class="text-red-300">{{ error }}</p>
+
+      <button
+        (click)="cargarMaestro()"
+        class="mt-4 bg-red-700 hover:bg-red-600 px-4 py-2 rounded-lg">
+        Reintentar
+      </button>
+
+      <a
+        routerLink="/utl/maestros"
+        class="inline-block ml-3 text-blue-400 hover:text-blue-300">
+        Volver
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

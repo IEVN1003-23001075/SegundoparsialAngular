@@ -1,8 +1,10 @@
-/* Puedes agregar estilos globales a este archivo e importar otros archivos de estilo */
 
-@import "tailwindcss";
+/* Importaciones */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* Configuración nativa de Flowbite para Tailwind v4 */
+@import "tailwindcss";
+
+/* Configuración de Flowbite */
 @plugin "flowbite/plugin";
+
 @source "../node_modules/flowbite";

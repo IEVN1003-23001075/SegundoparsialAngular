@@ -2,14 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { IVenta } from './venta';
 
 @Component({
   selector: 'app-cinepolis',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule],
   templateUrl: './cinepolis.html',
   styleUrl: './cinepolis.css',
 })
