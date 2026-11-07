@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-
 import { MaestrosUTL } from '../maestrosUTL';
 import { MaestroApiService } from '../maestroapi.service';
 
@@ -34,7 +33,7 @@ export class AgregarMaestro {
 
   agregarMaestro(formulario: NgForm): void {
 
-    if (formulario.invalid) {
+    if (formulario.invalid || this.guardando) {
       this.error = 'Completa todos los campos correctamente.';
       return;
     }
@@ -47,7 +46,7 @@ export class AgregarMaestro {
 
       next: (response: any) => {
 
-        if (response && response.exito) {
+        if (response?.exito) {
           this.mensaje = 'Maestro registrado correctamente.';
 
           setTimeout(() => {
@@ -55,19 +54,22 @@ export class AgregarMaestro {
           }, 1000);
 
         } else {
-          this.error = response?.mensaje || 'No fue posible registrar el maestro.';
+          this.error = response?.mensaje ||
+            'No fue posible registrar el maestro.';
           this.guardando = false;
         }
 
       },
 
       error: (error) => {
-        console.error('Error al registrar maestro:', error);
+
+        console.error(error);
 
         this.error = error.error?.mensaje ||
           'Ocurrió un error al comunicarse con el servidor.';
 
         this.guardando = false;
+
       }
 
     });

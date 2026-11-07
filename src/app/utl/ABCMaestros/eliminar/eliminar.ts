@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-
 import { MaestrosUTL } from '../maestrosUTL';
 import { MaestroApiService } from '../maestroapi.service';
 
@@ -16,7 +15,6 @@ import { MaestroApiService } from '../maestroapi.service';
 export class EliminarMaestro implements OnInit {
 
   idmaestro = 0;
-
   maestro: MaestrosUTL | null = null;
 
   cargando = false;
@@ -32,7 +30,9 @@ export class EliminarMaestro implements OnInit {
 
   ngOnInit(): void {
 
-    const id = Number(this.route.snapshot.paramMap.get('idmaestro'));
+    const id = Number(
+      this.route.snapshot.paramMap.get('idmaestro')
+    );
 
     if (!id || isNaN(id)) {
       this.error = 'El ID del maestro no es válido.';
@@ -41,6 +41,7 @@ export class EliminarMaestro implements OnInit {
 
     this.idmaestro = id;
     this.cargarMaestro();
+
   }
 
   cargarMaestro(): void {
@@ -52,10 +53,11 @@ export class EliminarMaestro implements OnInit {
 
       next: (response: any) => {
 
-        const datos = response?.maestro ?? response;
+        const datos = response?.maestro;
 
-        if (response?.exito === false || !datos?.nombre) {
-          this.error = response?.mensaje || 'No se encontró el maestro.';
+        if (!response?.exito || !datos) {
+          this.error = response?.mensaje ||
+            'No se encontró el maestro.';
           this.cargando = false;
           return;
         }
@@ -67,7 +69,7 @@ export class EliminarMaestro implements OnInit {
 
       error: (error) => {
 
-        console.error('Error al consultar maestro:', error);
+        console.error(error);
 
         this.error = error.error?.mensaje ||
           'No fue posible cargar los datos del maestro.';
@@ -98,7 +100,9 @@ export class EliminarMaestro implements OnInit {
     this.error = '';
     this.mensaje = '';
 
-    this.maestrosService.eliminarMaestro(this.idmaestro).subscribe({
+    this.maestrosService.eliminarMaestro(
+      this.idmaestro
+    ).subscribe({
 
       next: (response: any) => {
 
@@ -123,7 +127,7 @@ export class EliminarMaestro implements OnInit {
 
       error: (error) => {
 
-        console.error('Error al eliminar maestro:', error);
+        console.error(error);
 
         this.error = error.error?.mensaje ||
           'Ocurrió un error al comunicarse con el servidor.';
@@ -134,6 +138,10 @@ export class EliminarMaestro implements OnInit {
 
     });
 
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/utl/maestros']);
   }
 
 }

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { AlumnosUtl } from '../alumnosUTL';
 import { ProyectoapiService } from '../alumnoapi.service';
 
@@ -25,10 +24,8 @@ export class Editar implements OnInit {
   };
 
   matriculaOriginal: string = '';
-
   cargando: boolean = true;
   guardando: boolean = false;
-
   error: string = '';
 
   constructor(
@@ -38,7 +35,6 @@ export class Editar implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.matriculaOriginal =
       this.route.snapshot.paramMap.get('matricula') || '';
 
@@ -49,44 +45,37 @@ export class Editar implements OnInit {
     }
 
     this.cargarAlumno();
-
   }
 
   cargarAlumno(): void {
+    this.cargando = true;
+    this.error = '';
 
-    this.alumnosService.getAlumnos().subscribe({
+    this.alumnosService.getAlumno(this.matriculaOriginal).subscribe({
 
-      next: (response: AlumnosUtl[]) => {
+      next: (response: any) => {
+        const encontrado = response?.alumno;
 
-        const encontrado = response.find(
-          alumno => alumno.matricula.toString() === this.matriculaOriginal
-        );
-
-        if (encontrado) {
+        if (response?.exito && encontrado) {
           this.alumno = { ...encontrado };
         } else {
-          this.error = 'No se encontró el alumno.';
+          this.error = response?.mensaje || 'No se encontró el alumno.';
         }
 
         this.cargando = false;
-
       },
 
       error: (error) => {
-
-        console.error('Error al consultar alumno:', error);
-
-        this.error = 'No fue posible cargar la información.';
+        console.error(error);
+        this.error = error.error?.mensaje ||
+          'No fue posible cargar la información del alumno.';
         this.cargando = false;
-
       }
 
     });
-
   }
 
   actualizarAlumno(): void {
-
     this.error = '';
 
     if (
@@ -106,23 +95,24 @@ export class Editar implements OnInit {
       this.alumno
     ).subscribe({
 
-      next: () => {
-
-        this.router.navigate(['/utl/alumnos']);
-
+      next: (response: any) => {
+        if (response?.exito) {
+          this.router.navigate(['/utl/alumnos']);
+        } else {
+          this.error = response?.mensaje ||
+            'No fue posible actualizar al alumno.';
+          this.guardando = false;
+        }
       },
 
       error: (error) => {
-
-        console.error('Error al actualizar alumno:', error);
-
-        this.error = 'No fue posible actualizar al alumno.';
+        console.error(error);
+        this.error = error.error?.mensaje ||
+          'No fue posible actualizar al alumno.';
         this.guardando = false;
-
       }
 
     });
-
   }
 
   cancelar(): void {

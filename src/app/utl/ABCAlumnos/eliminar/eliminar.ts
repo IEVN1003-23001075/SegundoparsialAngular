@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { AlumnosUtl } from '../alumnosUTL';
 import { ProyectoapiService } from '../alumnoapi.service';
 
@@ -16,10 +15,8 @@ import { ProyectoapiService } from '../alumnoapi.service';
 export class Eliminar implements OnInit {
 
   alumno?: AlumnosUtl;
-
   cargando: boolean = true;
   eliminando: boolean = false;
-
   error: string = '';
 
   constructor(
@@ -29,7 +26,6 @@ export class Eliminar implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     const matricula =
       this.route.snapshot.paramMap.get('matricula');
 
@@ -39,38 +35,38 @@ export class Eliminar implements OnInit {
       return;
     }
 
-    this.alumnosService.getAlumnos().subscribe({
+    this.cargarAlumno(matricula);
+  }
 
-      next: (response: AlumnosUtl[]) => {
+  cargarAlumno(matricula: string): void {
+    this.cargando = true;
+    this.error = '';
 
-        this.alumno = response.find(
-          alumno => alumno.matricula.toString() === matricula
-        );
+    this.alumnosService.getAlumno(matricula).subscribe({
 
-        if (!this.alumno) {
-          this.error = 'No se encontró el alumno.';
+      next: (response: any) => {
+        if (response?.exito && response?.alumno) {
+          this.alumno = response.alumno;
+        } else {
+          this.error = response?.mensaje ||
+            'No se encontró el alumno.';
         }
 
         this.cargando = false;
-
       },
 
       error: (error) => {
-
-        console.error('Error al consultar alumno:', error);
-
-        this.error = 'No fue posible consultar el alumno.';
+        console.error(error);
+        this.error = error.error?.mensaje ||
+          'No fue posible consultar el alumno.';
         this.cargando = false;
-
       }
 
     });
-
   }
 
   confirmarEliminar(): void {
-
-    if (!this.alumno) {
+    if (!this.alumno || this.eliminando) {
       return;
     }
 
@@ -81,23 +77,24 @@ export class Eliminar implements OnInit {
       this.alumno.matricula
     ).subscribe({
 
-      next: () => {
-
-        this.router.navigate(['/utl/alumnos']);
-
+      next: (response: any) => {
+        if (response?.exito) {
+          this.router.navigate(['/utl/alumnos']);
+        } else {
+          this.error = response?.mensaje ||
+            'No fue posible eliminar al alumno.';
+          this.eliminando = false;
+        }
       },
 
       error: (error) => {
-
-        console.error('Error al eliminar alumno:', error);
-
-        this.error = 'No fue posible eliminar al alumno.';
+        console.error(error);
+        this.error = error.error?.mensaje ||
+          'No fue posible eliminar al alumno.';
         this.eliminando = false;
-
       }
 
     });
-
   }
 
   cancelar(): void {

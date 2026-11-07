@@ -13,17 +13,23 @@ export class ProyectoapiService {
 
   constructor(private http: HttpClient) {}
 
-  // Consultar alumnos
-  getAlumnos(): Observable<AlumnosUtl[]> {
-    return this.http.get<AlumnosUtl[]>(this.apiUrl);
+  getAlumnos(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
   }
 
-  // Agregar alumno
+  getAlumno(matricula: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/${encodeURIComponent(matricula)}`
+    );
+  }
+
   agregarNuevoAlumno(datos: AlumnosUtl): Observable<any> {
-    return this.http.post<any>(this.apiUrl, datos);
+    return this.http.post<any>(
+      this.apiUrl,
+      datos
+    );
   }
 
-  // Editar alumno
   actualizarAlumno(
     matricula: string,
     datos: AlumnosUtl
@@ -34,10 +40,10 @@ export class ProyectoapiService {
     );
   }
 
-  // Eliminar alumno
   eliminarAlumno(matricula: string): Observable<any> {
     return this.http.delete<any>(
       `${this.apiUrl}/${encodeURIComponent(matricula)}`
     );
   }
+
 }
